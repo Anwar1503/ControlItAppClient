@@ -4,8 +4,11 @@ import time
 import uuid
 import requests
 import webbrowser
+from logger import setup_logger
 
-SERVER_URL = "http://localhost:5000"
+logger = setup_logger("agent_backend")
+
+SERVER_URL = "http://192.168.1.108/login"
 
 APP_DIR = os.path.join(os.getenv("APPDATA"), "ControlIt")
 CONFIG_FILE = os.path.join(APP_DIR, "config.json")
@@ -34,11 +37,11 @@ def generate_agent_id():
 
 def open_browser_for_link(agent_id):
     url = f"{SERVER_URL}/agent/link?agent_id={agent_id}"
-    print("[INFO] Opening browser for linking")
+    logger.debug("[INFO] Opening browser for linking")
     webbrowser.open(url)
 
 def wait_for_link(agent_id):
-    print("[INFO] Waiting for agent to be linked...")
+    logger.debug("[INFO] Waiting for agent to be linked...")
     while True:
         try:
             res = requests.get(
@@ -59,7 +62,7 @@ def wait_for_link(agent_id):
 
 def start_heartbeat(agent_id, agent_token):
     headers = {"Authorization": f"Bearer {agent_token}"}
-    print("[INFO] Heartbeat started")
+    logger.debug("[INFO] Heartbeat started")
 
     try:
         while True:
