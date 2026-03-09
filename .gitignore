@@ -4,3 +4,9 @@ dist/
 # Ignore Python cache
 __pycache__/
 *.py[cod]
+
+#suggestions from ai agents
+*.md
+
+#extensions (peacock )
+*.vscode
